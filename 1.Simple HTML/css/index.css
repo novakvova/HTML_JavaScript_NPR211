@@ -1,3 +1,12 @@
+.my-container {
+  padding: 0;
+  margin: auto;
+  width: 1280px;
+}
+.my-container .my-center {
+  text-align: center;
+}
+
 .my-table {
   width: 100%;
   border-collapse: collapse;

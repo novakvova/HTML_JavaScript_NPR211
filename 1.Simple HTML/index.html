@@ -6,11 +6,12 @@
     <title>Смакуємо ковбаску</title>
 <!--    <link rel="stylesheet" href="/css/site.css">-->
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-    <main>
-        <h1>Салон краси--</h1>
-<!--        <img src="/images/woman.jpg" alt="Жінка" width="800" />-->
+    <main class="my-container">
+        <h1 class="my-center">Салон краси</h1>
+        <button id="btn_add" class="btn btn-secondary">Додати користувача</button>
         <table class="my-table">
             <thead>
                 <tr>
@@ -45,4 +46,15 @@
         </table>
     </main>
 </body>
+
+<script>
+    const btn_add = document.getElementById("btn_add");
+    btn_add.onclick = function () {
+        const name = prompt("Як Вас звать?");
+        btn_add.innerHTML = name;
+        btn_add.className="btn btn-danger";
+    }
+    //alert("Привіт");
+    //console.log("Привіт - це JavaScript");
+</script>
 </html>

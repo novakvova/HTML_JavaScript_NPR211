@@ -1,6 +1,16 @@
 $border-color: #315ba8;
 $background-color: #8ca4a8;
 
+.my-container {
+  padding: 0;
+  margin:auto;
+  width: 1280px;
+
+  .my-center {
+    text-align: center;
+  }
+}
+
 .my-table {
   //border: solid 1px $border-color;
   width: 100%;
