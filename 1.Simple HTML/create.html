@@ -60,7 +60,7 @@
             
             <div class="row mb-3 d-flex align-items-center">
                 <div class="col-md-3">
-                    <img class="img-fluid" src="/images/user.jpg" alt="фото">
+                    <img class="img-fluid rounded-circle" src="/images/user.jpg" id="userPreview" alt="фото">
                 </div>
                 <div class="col-md-9">
                     <div class="">
@@ -101,6 +101,25 @@
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         const forms = document.querySelectorAll('.needs-validation')
 
+        const userFile = document.getElementById("userFile");
+        const userPreview = document.getElementById("userPreview");
+        userFile.addEventListener("change", function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                if (file.type.startsWith('image/')) {
+                    userPreview.src=URL.createObjectURL(file);
+                }
+                else {
+                    alert("Тип файлу має бути зображення");
+                    userPreview.src="/images/user.jpg";
+                    userFile.value=""; //скидаємо стан інтупа
+                }
+            }
+            else {
+                alert("Оберіть файл!");
+            }
+        });
+
         // Loop over them and prevent submission
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
@@ -108,7 +127,6 @@
                     event.preventDefault()
                     event.stopPropagation()
                 }
-
                 form.classList.add('was-validated')
             }, false)
         })
