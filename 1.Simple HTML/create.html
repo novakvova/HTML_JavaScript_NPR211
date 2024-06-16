@@ -12,11 +12,107 @@
 </head>
 <body>
 <script>loadDOM("/partials/header.html")</script>
-<main class="my-container">
-    <h1 class="my-center">Додати користувача</h1>
+<main class="container">
+    <h1 class="text-center">Додати користувача</h1>
+    <div class="row">
+        <form class="offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xxl-3 col-xxl-6 needs-validation" novalidate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Ім'я</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                        <div class="invalid-feedback">
+                            Вкажіть ім'я
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Прізвище</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                        <div class="invalid-feedback">
+                            Вкажіть прізвище
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Телефон</label>
+                        <input type="text" class="form-control" id="phone" required>
+                        <div class="invalid-feedback">
+                            Вкажіть телефон
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Пошта</label>
+                        <input type="email" class="form-control" id="email" required>
+                        <div class="invalid-feedback">
+                            Вкажіть пошту
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3 d-flex align-items-center">
+                <div class="col-md-3">
+                    <img class="img-fluid" src="/images/user.jpg" alt="фото">
+                </div>
+                <div class="col-md-9">
+                    <div class="">
+                        <label for="userFile" class="form-label">Оберіть фото</label>
+                        <input class="form-control" type="file" id="userFile" required>
+                        <div class="invalid-feedback">
+                            Оберіть фото
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" required>
+                <div class="invalid-feedback">
+                    Вкажіть пароль
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary me-2">Додати</button>
+                <a href="/" class="btn btn-secondary">Скасувать</a>
+            </div>
+
+        </form>
+    </div>
 </main>
 </body>
 
 <script src="/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
 
 </html>
