@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Смакуємо ковбаску</title>
+    <!--    <link rel="stylesheet" href="/css/site.css">-->
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/site.js"></script>
+</head>
+<body>
+<script>loadDOM("/partials/header.html")</script>
+<main class="container">
+    <h1 class="text-center">Додати категорію</h1>
+    <div class="row">
+        <form id="formCreate" class="offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xxl-3 col-xxl-6 needs-validation" novalidate>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Назва</label>
+                <input type="text" class="form-control" id="name" required>
+                <div class="invalid-feedback">
+                    Вкажіть назву
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Опис</label>
+                <textarea class="form-control" id="description" rows="5"></textarea>
+            </div>
+
+
+            <div class="row mb-3 d-flex align-items-center">
+                <div class="col-md-3">
+                    <img class="img-fluid " src="/images/default.jpg" id="userPreview" alt="фото">
+                </div>
+                <div class="col-md-9">
+                    <div class="">
+                        <label for="image" class="form-label">Оберіть фото</label>
+                        <input class="form-control" type="file" id="image" required>
+                        <div class="invalid-feedback">
+                            Оберіть фото
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary me-2">Додати</button>
+                <a href="/" class="btn btn-secondary">Скасувать</a>
+            </div>
+
+        </form>
+    </div>
+</main>
+</body>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/axios.min.js"></script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        const userFile = document.getElementById("image");
+        const userPreview = document.getElementById("userPreview");
+        userFile.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.type.startsWith('image/')) {
+                    userPreview.src = URL.createObjectURL(file);
+                } else {
+                    alert("Тип файлу має бути зображення");
+                    userPreview.src = "/images/default.jpg";
+                    userFile.value = ""; //скидаємо стан інтупа
+                }
+            } else {
+                alert("Оберіть файл!");
+            }
+        });
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                //якщо форма вілідна
+                else {
+                    event.preventDefault();
+                    addUser();
+                    //console.log("Form Submit valid", form.id);
+                }
+                form.classList.add('was-validated')
+            }, false)
+        });
+
+        const addUser = () => {
+            const model = {
+              name: document.getElementById("name").value,
+              description: document.getElementById("description").value,
+              imageFile: document.getElementById("image").files[0]
+            };
+            //console.log("Submit data", model);
+            const server = "https://npr211.novakv.com";
+            axios.post(`${server}/api/category`, model,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+                .then(resp => {
+                    console.log("Запит успішний", resp);
+                    window.location="/categories.html";
+                });
+        }
+
+    })()
+</script>
+
+</html>
