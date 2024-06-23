@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Смакуємо ковбаску</title>
+<!--    <link rel="stylesheet" href="/css/site.css">-->
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/site.js"></script>
+</head>
+<body>
+    <script>loadDOM("/partials/header.html")</script>
+
+    <main class="my-container">
+        <h1 class="my-center">Наше меню</h1>
+        <button id="btn_add" class="btn btn-secondary">Додати категорію</button>
+        <table class="my-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Фото</th>
+                    <th>Назва</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="categories">
+
+            </tbody>
+        </table>
+    </main>
+</body>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/axios.min.js"></script>
+<script>
+    const server = "https://npr211.novakv.com";
+    //тут буде зберігатися список категорій
+    const categories = document.getElementById("categories");
+    axios.get(`${server}/api/category`)
+        .then(resp => {
+            // console.log("Server result", resp);
+            const {data} = resp;
+            data.forEach(category => {
+                const image = category.imagePath == null ?
+                    "/images/default.jpg" : `${server}/images/320_${category.imagePath}`;
+                categories.innerHTML +=
+                    `
+                <tr>
+                    <td>${category.id}</td>
+                    <td>
+                        <img src="${image}"
+                            alt="${category.name}" width="100">
+                    </td>
+                    <td>${category.name}</td>
+                    <td></td>
+                </tr>
+                    `;
+                // if(category.imagePath==null) {
+                //     console.log("image path == null", category.imagePath);
+                // }
+                // console.log("item", category);
+            });
+        });
+</script>
+</html>

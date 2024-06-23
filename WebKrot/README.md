@@ -31,7 +31,7 @@ docker run -d --restart=always --name npr211_container -p 6193:8080 novakvova/np
 
 ```nginx options /etc/nginx/sites-available/default
 server {
-    server_name   npr211.itstep.click *.npr211.itstep.click;
+    server_name   npr211.novakv.com *.npr211.novakv.com;
     location / {
        proxy_pass         http://localhost:6193;
        proxy_http_version 1.1;
