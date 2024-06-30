@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-icons/font/bootstrap-icons.min.css">
     <script src="/js/site.js"></script>
 </head>
 <body>
     <script>loadDOM("/partials/header.html")</script>
+    <script>loadDOM("/partials/modal_confirm.html")</script>
 
     <main class="my-container">
         <h1 class="my-center">Наше меню</h1>
@@ -38,6 +40,7 @@
     const server = "https://npr211.novakv.com";
     //тут буде зберігатися список категорій
     const categories = document.getElementById("categories");
+    const deleteConfirmModal = new bootstrap.Modal("#deleteConfirmModal");
     axios.get(`${server}/api/category`)
         .then(resp => {
             // console.log("Server result", resp);
@@ -54,7 +57,15 @@
                             alt="${category.name}" width="100">
                     </td>
                     <td>${category.name}</td>
-                    <td></td>
+                    <td>
+                        <i class="bi bi-trash3 fs-3 text-danger"
+                            data-delete
+                            data-id="${category.id}"
+                            data-name="${category.name}"
+                            style="cursor: pointer"></i>
+                        &nbsp;
+                        <i class="bi bi-pencil-fill fs-4 text-primary"></i>
+                    </td>
                 </tr>
                     `;
                 // if(category.imagePath==null) {
@@ -62,6 +73,21 @@
                 // }
                 // console.log("item", category);
             });
+
+            onDeleteEvent();
         });
+
+    const onDeleteEvent = () => {
+        let btns = document.querySelectorAll('[data-delete]');
+        btns.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const { dataset } = event.target;
+                const {id, name} = dataset;
+                deleteConfirmModal.show();
+                console.log("id, name", id, name);
+                //alert('Delete item with ID: ' + deleteId);
+            });
+        });
+    }
 </script>
 </html>
