@@ -13,7 +13,7 @@
 <body>
 <script>loadDOM("/partials/header.html")</script>
 <main class="container">
-    <h1 class="text-center">Додати категорію</h1>
+    <h1 class="text-center">Редагувати категорію</h1>
     <div class="row">
         <form id="formCreate" class="offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xxl-3 col-xxl-6 needs-validation" novalidate>
 
@@ -38,7 +38,7 @@
                 <div class="col-md-9">
                     <div class="">
                         <label for="image" class="form-label">Оберіть фото</label>
-                        <input class="form-control" type="file" id="image" required>
+                        <input class="form-control" type="file" id="image">
                         <div class="invalid-feedback">
                             Оберіть фото
                         </div>
@@ -47,7 +47,7 @@
             </div>
 
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary me-2">Додати</button>
+                <button type="submit" class="btn btn-primary me-2">Оновити</button>
                 <a href="/categories.html" class="btn btn-secondary">Скасувать</a>
             </div>
 
@@ -60,6 +60,23 @@
 <script src="/js/axios.min.js"></script>
 
 <script>
+    (async () => {
+        const urlParams = new URLSearchParams(location.search)
+        const id = urlParams.get('id')
+        if (id === null)
+            return
+        console.log("id", id);
+        const server = "https://npr211.novakv.com"
+        const {data} = await axios.get(`${server}/api/category/${id}`)
+        const image = data.imagePath === null
+            ? "/images/default.jpg"
+            : `${server}/images/320_${data.imagePath}`;
+
+        document.getElementById('name').value = data.name
+        document.getElementById('description').value = data.description
+        document.getElementById('userPreview').src = image
+    })();
+
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {
         'use strict'
@@ -94,22 +111,23 @@
                 //якщо форма вілідна
                 else {
                     event.preventDefault();
-                    addUser();
+                    updateUser();
                     //console.log("Form Submit valid", form.id);
                 }
                 form.classList.add('was-validated')
             }, false)
         });
 
-        const addUser = () => {
+        const updateUser = () => {
             const model = {
-              name: document.getElementById("name").value,
-              description: document.getElementById("description").value,
-              imageFile: document.getElementById("image").files[0]
+                id: +new URLSearchParams(location.search).get('id'),
+                name: document.getElementById("name").value,
+                description: document.getElementById("description").value,
+                imageFile: document.getElementById("image").files[0]
             };
             //console.log("Submit data", model);
             const server = "https://npr211.novakv.com";
-            axios.post(`${server}/api/category`, model,
+            axios.put(`${server}/api/category`, model,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data"

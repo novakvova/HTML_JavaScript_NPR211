@@ -40,7 +40,12 @@
     const server = "https://npr211.novakv.com";
     //тут буде зберігатися список категорій
     const categories = document.getElementById("categories");
+    //Текст в модальному вікні
+    const pSure = document.getElementById("p-sure");
+    //Модальне вікно
     const deleteConfirmModal = new bootstrap.Modal("#deleteConfirmModal");
+
+    let remoteId = 0;
     axios.get(`${server}/api/category`)
         .then(resp => {
             // console.log("Server result", resp);
@@ -64,7 +69,10 @@
                             data-name="${category.name}"
                             style="cursor: pointer"></i>
                         &nbsp;
-                        <i class="bi bi-pencil-fill fs-4 text-primary"></i>
+                        <a href="/category/edit.html?id=${category.id}">
+                            <i class="bi bi-pencil-fill fs-4 text-primary"></i>
+                        </a>
+
                     </td>
                 </tr>
                     `;
@@ -83,11 +91,16 @@
             button.addEventListener('click', (event) => {
                 const { dataset } = event.target;
                 const {id, name} = dataset;
+                pSure.innerHTML = `Ви дійсно бажаєте видалити категорію '${name}'?`;
                 deleteConfirmModal.show();
-                console.log("id, name", id, name);
-                //alert('Delete item with ID: ' + deleteId);
+                remoteId = id;  //зберігаємо id - категорії, яку потрібно видалить
             });
         });
     }
+
+    document.getElementById("yes-button").addEventListener("click", async () => {
+        await axios.delete(`${server}/api/category/${remoteId}`)
+        window.location.reload();
+    });
 </script>
 </html>
