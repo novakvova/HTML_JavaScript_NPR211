@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Смакуємо ковбаску</title>
+    <!--    <link rel="stylesheet" href="/css/site.css">-->
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/site.js"></script>
+</head>
+<body>
+<script>loadDOM("/partials/header.html")</script>
+<script>
+    const products = [
+        {
+            name: "Відеореєстратор 70mai Dash Cam A800S+RC06",
+            price: "7 999₴",
+            image: "https://content2.rozetka.com.ua/goods/images/big/181026161.jpg"
+        },
+        {
+            name: "Відеореєстратор 70mai Dash Cam 3 M200 1055361",
+            price: "2 499₴",
+            image: "https://content2.rozetka.com.ua/goods/images/big/446241190.jpg"
+        },
+        {
+            name: "Відеореєстратор GT Electronics GT R Twin",
+            price: "849₴",
+            image: "https://content1.rozetka.com.ua/goods/images/big/258386009.jpg"
+        },
+        {
+            name: "Автомобільний відеореєстратор Tracer M4TS FHD ORION",
+            price: "2 324₴",
+            image: "https://content.rozetka.com.ua/goods/images/big/379446684.jpg"
+        },
+        {
+            name: "Ноутбук ASUS Vivobook Pro 15 OLED K6502VV-MA023",
+            price: "66 499₴",
+            image: "https://content2.rozetka.com.ua/goods/images/big/400330397.jpg"
+        }
+    ]
+</script>
+<div class="container">
+    <h1 class="text-center">Список продуктів</h1>
+    <div class="row align-items-start">
+        <script>
+            products.forEach(p => {
+                document.write(
+                    `
+        <div class="col-xxl-3 col-lg-4 col-md-6">
+            <div class="card" style="width: 100%">
+                <img class="card-img-top object-fit-contain"
+                    style="height: 300px"
+                     src="${p.image}"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">${p.name}</h5>
+                    <p class="card-text">${p.price}</p>
+                    <a href="#" class="btn btn-primary">Купити</a>
+                </div>
+            </div>
+        </div>
+                    `
+                );
+            });
+        </script>
+    </div>
+</div>
+
+</body>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+</html>
